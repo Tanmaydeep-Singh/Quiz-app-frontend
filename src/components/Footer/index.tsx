@@ -2,7 +2,7 @@
 
 const Footer = () => {
     return (
-      <footer className="bg-background-card text-primary-100 py-8 text-gray-400">
+      <footer className=" text-primary-100 py-8 text-gray-400">
         <div className="max-w-6xl mx-auto px-4">
           <div className="mb-8">
             <h2 className="text-xl font-semibold mb-4 text-primary-100">About QuizApp</h2>

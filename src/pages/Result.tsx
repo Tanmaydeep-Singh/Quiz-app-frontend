@@ -1,14 +1,19 @@
-import React from "react";
-import { useParams} from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
+interface QuizResultState {
+  userScore: number;
+  userName: string;
+}
 
 const Result = () => {
-  const { id } = useParams();
-
-
+  const location = useLocation();
+  
+  const { userScore, userName }: QuizResultState = location.state || { userScore: 0, userName: "" };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      <h1 className="text-2xl font-bold mb-4">Result : {id} </h1>
+    <div>
+      <h1>Results for {userName}</h1>
+      <p>Your score: {userScore}</p>
     </div>
   );
 };

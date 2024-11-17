@@ -8,8 +8,9 @@ import NotFound from "./pages/NotFound";
 import Result from "./pages/Result";
 import Layout from "./components/Layout";
 import Signup from "./pages/Signup";
+import QuizStart from "./pages/QuizStart";
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <Router>
       <Routes>
@@ -20,7 +21,9 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/quiz/:id" element={<Quiz />} />
           <Route path="/about" element={<About />} />
-          <Route path="/result" element={<Result />} />
+          <Route path="/results" element={<Result />} />
+          <Route path="/quiz/:id/start" element={<QuizStart />} />
+
         </Route>
 
         <Route path="*" element={<NotFound />} />
