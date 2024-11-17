@@ -1,13 +1,25 @@
-const Footer = () => {
-  return (
-    <footer className="bg-blue-600 text-white text-center py-4 mt-auto">
-      <p>&copy; 2024 QuizApp. All Rights Reserved.</p>
-      <p>
-        <a href="/about" className="hover:text-gray-300">About</a> |{" "}
-        <a href="/contact" className="hover:text-gray-300">Contact</a>
-      </p>
-    </footer>
-  );
-};
+// components/Footer.tsx
 
-export default Footer;
+const Footer = () => {
+    return (
+      <footer className="bg-background-card text-primary-100 py-8 text-gray-400">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold mb-4 text-primary-100">About QuizApp</h2>
+            <p className="text-primary-200">
+              QuizApp is your ultimate destination for engaging and educational quizzes. Test your knowledge across various topics and compete with friends to see who’s the best!
+            </p>
+          </div>
+  
+          <div className="border-t border-primary-200 pt-4 text-center">
+            <p className="text-primary-200 text-sm">
+              &copy; {new Date().getFullYear()} QuizApp. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
+    );
+  };
+  
+  export default Footer;
+  
