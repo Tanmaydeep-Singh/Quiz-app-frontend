@@ -9,9 +9,11 @@ import Result from "./pages/Result";
 import Layout from "./components/Layout";
 import Signup from "./pages/Signup";
 import QuizStart from "./pages/QuizStart";
+import CreateQuiz from "./pages/CreateQuiz";
 
 const App = () => {
   return (
+    <div className="bg-gradient-to-r from-black via-gray-900 to-black shadow-md backdrop-blur-md bg-opacity-30">
     <Router>
       <Routes>
       <Route path="/login" element={<Login />} />
@@ -22,13 +24,16 @@ const App = () => {
           <Route path="/quiz/:id" element={<Quiz />} />
           <Route path="/about" element={<About />} />
           <Route path="/results" element={<Result />} />
-          <Route path="/quiz/:id/start" element={<QuizStart />} />
+          <Route path="/create-quiz" element={<CreateQuiz />} />
+
 
         </Route>
+        <Route path="/quiz/:id/start" element={<QuizStart />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
+    </div>
   );
 };
 

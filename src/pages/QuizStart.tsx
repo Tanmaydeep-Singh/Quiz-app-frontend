@@ -83,11 +83,14 @@ const QuizStart = () => {
   };
 
   return (
-    <div className="text-gray-200 min-h-screen flex items-center justify-center p-6">
-      <div className="max-w-2xl w-full bg-gray-800 rounded-lg shadow-lg p-6">
-        <h1 className="text-3xl font-bold text-green-400 mb-4">
+    <div className=" h-screen  flex  justify-center p-8">
+      <div className=" w-[80vw]  rounded-lg shadow-lg p-6">
+    
+        <h1 className="text-3xl font-bold text-white mb-20">
           Quiz: {id}
         </h1>
+    
+    
         {currentQuestion ? (
           <div>
             <p className="text-lg font-medium mb-4">{currentQuestion.text}</p>
@@ -106,6 +109,7 @@ const QuizStart = () => {
                 </li>
               ))}
             </ul>
+          
             <div className="mt-4">
               {selectedOption !== null && (
                 <button
@@ -115,6 +119,8 @@ const QuizStart = () => {
                   Next Question
                 </button>
               )}
+          
+          
               <button
                 onClick={handleSkipQuestion}
                 className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg mr-2"
@@ -128,8 +134,12 @@ const QuizStart = () => {
                 Finish Quiz
               </button>
             </div>
+
+            
           </div>
-        ) : (
+        
+    
+    ) : (
           <div>
             <p>Quiz Completed!</p>
             <p>Your score: {userScore} out of {questions.length}</p>

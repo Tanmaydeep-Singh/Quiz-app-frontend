@@ -1,19 +1,15 @@
 import RecentActivities from "../components/Home/RecentActivities";
 import Quote from "../components/Home/Quote";
-import Quiz from "./Quiz";
 import AvailableQuiz from "../components/Home/AvailableQuiz";
+import MyQuiz from "../components/Home/MyQuiz";
+import CreateQuiz from "../components/Home/CreateQuiz";
 
 
 
 const Home = () => {
   
 
-  const leaderboard = [
-    { name: "Alice", score: 96 },
-    { name: "Bob", score: 91 },
-    { name: "Charlie", score: 89 },
-  ];
-
+  
   return (
     <div className="min-h-screen  text-white p-8">
       <header className="text-center mb-8">
@@ -25,19 +21,13 @@ const Home = () => {
       <AvailableQuiz/>
     
       <RecentActivities/>
+
+
+       <MyQuiz/>
+
+       <CreateQuiz/>
      
-      <section className="mb-8">
-        <h2 className="text-3xl font-bold text-gray-800 mb-4">Leaderboard</h2>
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <ol className="list-decimal ml-6">
-            {leaderboard.map((user, index) => (
-              <li key={index} className="text-gray-800">
-                {user.name}: <span className="font-semibold">{user.score}%</span>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+     
         
         <Quote/>
 
