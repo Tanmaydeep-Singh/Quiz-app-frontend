@@ -1,150 +1,171 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 
 interface Question {
-  id: string;
-  text: string;
+  questionId: string;
+  questionText: string;
   options: string[];
-  correctOption: number;
-  difficulty: number;
+  difficulty: string;
 }
 
-const questions: Question[] = [
-  { id: "q1", text: "What is 2 + 2?", options: ["3", "4", "5", "6"], correctOption: 1, difficulty: 1 },
-  { id: "q2", text: "What is 15 x 15?", options: ["200", "225", "250", "275"], correctOption: 1, difficulty: 2 },
-  { id: "q3", text: "What is the square root of 144?", options: ["10", "11", "12", "13"], correctOption: 2, difficulty: 3 },
-];
+interface QuizDetails {
+  title: string;
+  description: string;
+  questions: Question[];
+}
 
 const QuizStart = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
-  const [questionIndex, setQuestionIndex] = useState(0);
-  const [userScore, setUserScore] = useState(0);
-  const [difficultyLevel, setDifficultyLevel] = useState(1);
+  const [quizDetails, setQuizDetails] = useState<QuizDetails | null>(null);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState(45);
-  const [selectedOption, setSelectedOption] = useState<number | null>(null);
-  const [quizCompleted, setQuizCompleted] = useState(false);
-  const [answers, setAnswers] = useState<Array<{ questionId: string, selectedOption: number | null, isCorrect: boolean }>>([]);
-
+  const [answers, setAnswers] = useState<
+    Array<{ questionId: string; selectedAnswer: string }>
+  >([]);
+  const [results, setResults] = useState<any>(null);
+  const [token, setToken] = useState<string>("");
   useEffect(() => {
-    const initialQuestion = questions[questionIndex];
-    setCurrentQuestion(initialQuestion);
-  }, [questionIndex]);
+    const token = localStorage.getItem("token");
+    if(id)
+    {
+    if(token)
+    {
+      setToken(token);
+    axios
+    .post(`http://localhost:5000/api/quizzes/start`, {
+      "quizId": `${id}`,
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`, 
+      },
+    })
+      .then((res) => setQuizDetails(res.data))
+      .catch((err) => console.error(err));
+    }
+    }}, [id]);
 
   useEffect(() => {
     if (timeLeft === 0) {
-      handleSkipQuestion();
-    } else if (!quizCompleted) {
+      handleNextQuestion(); 
+    } else if (!results) {
       const timer = setInterval(() => {
-        setTimeLeft((prevTime) => prevTime - 1);
+        setTimeLeft((prev) => prev - 1);
       }, 1000);
       return () => clearInterval(timer);
     }
-  }, [timeLeft, quizCompleted]);
+  }, [timeLeft, results]);
 
-  const handleAnswer = (selected: number) => {
-    setSelectedOption(selected);
-    const isCorrect = selected === currentQuestion?.correctOption;
-    setAnswers((prevAnswers) => [
-      ...prevAnswers,
-      { questionId: currentQuestion?.id || '', selectedOption: selected, isCorrect }
-    ]);
-    if (isCorrect) {
-      setUserScore((prev) => prev + 1);
-    }
+  const handleAnswer = (selectedOption: string) => {
+    setSelectedAnswer(selectedOption);
   };
 
   const handleNextQuestion = () => {
-    if (questionIndex < questions.length - 1) {
-      setQuestionIndex(questionIndex + 1);
+    if (selectedAnswer && quizDetails) {
+      const currentQuestion = quizDetails.questions[currentQuestionIndex];
+      setAnswers((prevAnswers) => [
+        ...prevAnswers,
+        { questionId: currentQuestion.questionId, selectedAnswer },
+      ]);
+    }
+
+    if (
+      quizDetails &&
+      currentQuestionIndex < quizDetails.questions.length - 1
+    ) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
       setTimeLeft(45);
-      setSelectedOption(null);
+      setSelectedAnswer(null);
     } else {
-      setQuizCompleted(true);
-      navigate("/results", { state: { userScore, answers } });
+      submitQuiz(); 
     }
   };
 
-  const handleSkipQuestion = () => {
-    if (questionIndex < questions.length - 1) {
-      setQuestionIndex(questionIndex + 1);
-      setTimeLeft(45);
-      setSelectedOption(null);
-    } else {
-      setQuizCompleted(true);
-      navigate("/results", { state: { userScore, answers } });
-    }
-  };
+  const submitQuiz = () => {
 
-  const handleFinishQuiz = () => {
-    setQuizCompleted(true);
-    navigate("/results", { state: { userScore, answers } });
-  };
+    const payload = {
+      quizId: id,
+      answers,
+    };
+    console.log("Final", payload)
+    axios
+    .post(
+      `http://localhost:5000/api/quizzes/${id}/submit`,
+      payload, 
+      {  
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        },
+      }
+    )
+    .then((res) => setResults(res.data))  
+    .catch((err) => console.error(err));  
+  }
+  if (!quizDetails) {
+    return <div>Loading quiz details...</div>;
+  }
+
+  if (results) {
+    return (
+      <div className="p-6">
+        <h1 className="text-2xl font-bold mb-4">Quiz Results</h1>
+        <p>Your Score: {results.score}</p>
+        <p>Average Score: {results.averageScore}</p>
+        <p>Your Rank: {results.rank}</p>
+        <h2 className="text-lg font-semibold mt-4">Leaderboard:</h2>
+        <ul>
+          {results.leaderboard.map((entry: any, index: number) => (
+            <li key={index}>Score: {entry.score}</li>
+          ))}
+        </ul>
+        <button
+          onClick={() => navigate("/")}
+          className="mt-4 bg-blue-500 text-white p-2 rounded-lg"
+        >
+          Back to Home
+        </button>
+      </div>
+    );
+  }
+
+  const currentQuestion = quizDetails.questions[currentQuestionIndex];
 
   return (
-    <div className=" h-screen  flex  justify-center p-8">
-      <div className=" w-[80vw]  rounded-lg shadow-lg p-6">
-    
-        <h1 className="text-3xl font-bold text-white mb-20">
-          Quiz: {id}
-        </h1>
-    
-    
-        {currentQuestion ? (
-          <div>
-            <p className="text-lg font-medium mb-4">{currentQuestion.text}</p>
-            <p className="mb-4">Time Left: {timeLeft} sec</p>
-            <p className="mb-4">Question {questionIndex + 1} of {questions.length}</p>
-            <ul className="space-y-3">
-              {currentQuestion.options.map((option, index) => (
-                <li key={index}>
-                  <button
-                    onClick={() => handleAnswer(index)}
-                    className={`w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg ${selectedOption === index ? 'bg-green-600' : ''}`}
-                    disabled={selectedOption !== null}
-                  >
-                    {option}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          
-            <div className="mt-4">
-              {selectedOption !== null && (
-                <button
-                  onClick={handleNextQuestion}
-                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg mr-2"
-                >
-                  Next Question
-                </button>
-              )}
-          
-          
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">{quizDetails.title}</h1>
+      <p>{quizDetails.description}</p>
+      <div className="mt-6">
+        <p className="text-lg font-medium">
+          {currentQuestionIndex + 1}. {currentQuestion.questionText}
+        </p>
+        <p className="text-sm mb-4">Time Left: {timeLeft} seconds</p>
+        <ul className="space-y-3">
+          {currentQuestion.options.map((option, index) => (
+            <li key={index}>
               <button
-                onClick={handleSkipQuestion}
-                className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg mr-2"
+                onClick={() => handleAnswer(option)}
+                className={`w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg ${
+                  selectedAnswer === option ? "bg-green-600" : ""
+                }`}
+                disabled={!!selectedAnswer}
               >
-                Skip Question
+                {option}
               </button>
-              <button
-                onClick={handleFinishQuiz}
-                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg"
-              >
-                Finish Quiz
-              </button>
-            </div>
-
-            
-          </div>
-        
-    
-    ) : (
-          <div>
-            <p>Quiz Completed!</p>
-            <p>Your score: {userScore} out of {questions.length}</p>
-          </div>
-        )}
+            </li>
+          ))}
+        </ul>
+        <div className="mt-4">
+          {selectedAnswer && (
+            <button
+              onClick={handleNextQuestion}
+              className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg"
+            >
+              Next Question
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
