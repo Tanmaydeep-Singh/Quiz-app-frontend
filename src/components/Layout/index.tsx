@@ -5,9 +5,9 @@ import Navbar from "../Navbar";
 
 const Layout = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-r from-black via-gray-900 to-black shadow-md backdrop-blur-md bg-opacity-30">
+    <div className="min-h-screen flex flex-col bg-gradient-to-tr from-blue-50 via-blue-100 to-purple-50">
       <Navbar />
-      <main className="flex-grow w-full md:w-[80vw] mx-auto">
+      <main className="flex-grow w-full md:w-[80vw] mx-auto p-4">
         <Outlet />
       </main>
       <Footer />

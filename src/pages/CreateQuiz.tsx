@@ -20,10 +20,8 @@ const CreateQuiz = () => {
       .catch((err) => console.error(err));
   }, [token]);
 
-  const handleAddQuestion = (questionId: string , question: string) => {
+  const handleAddQuestion = (questionId: string, question: string) => {
     if (!selectedQuestions.includes(questionId)) {
-      console.log("Question ID" ,questionId)
-      
       setSelectedQuestions([...selectedQuestions, questionId]);
     }
   };
@@ -35,7 +33,6 @@ const CreateQuiz = () => {
       questionIds: selectedQuestions,
     };
 
-    console.log("Payload", payload)
     axios
       .post('http://localhost:5000/api/quizzes/create', payload, {
         headers: { Authorization: token },
@@ -45,32 +42,32 @@ const CreateQuiz = () => {
   };
 
   return (
-    <div className="p-6 text-white">
-      <h1 className="text-2xl font-bold mb-4">Create a New Quiz</h1>
+    <div className="p-8  text-gray-900 ">
+      <h1 className="text-3xl font-bold mb-6">Create a New Quiz</h1>
 
       <div className="mb-6">
-        <label className="block font-semibold">Title</label>
+        <label className="block text-lg font-semibold text-gray-800">Title</label>
         <input
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full p-2 bg-gray-800 border border-gray-300 text-white rounded-md"
+          className="w-full p-3 bg-white border border-gray-300 text-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter quiz title"
         />
-        <label className="block font-semibold mt-4">Description</label>
+        <label className="block text-lg font-semibold text-gray-800 mt-4">Description</label>
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="w-full p-2 bg-gray-800 border border-gray-300 text-white rounded-md"
+          className="w-full p-3 bg-white border border-gray-300 text-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter quiz description"
         />
       </div>
 
       <div className="mb-6">
-        <h2 className="text-lg font-semibold mb-2">Selected Questions</h2>
+        <h2 className="text-lg font-semibold text-gray-800 mb-2">Selected Questions</h2>
         <ul>
           {selectedQuestions.map((id) => (
-            <li key={id} className="p-2 border rounded-md mb-2">
+            <li key={id} className="p-3 border rounded-md mb-2 bg-gray-50 text-gray-800">
               {id}
             </li>
           ))}
@@ -79,8 +76,8 @@ const CreateQuiz = () => {
 
       <QuestionForm />
 
-      <div>
-        <h2 className="text-lg font-semibold mb-2">Available Questions</h2>
+      <div className="mb-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-2">Available Questions</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {availableQuestions.map((question) => (
             <QuestionCard
@@ -94,7 +91,7 @@ const CreateQuiz = () => {
 
       <button
         onClick={handleCreateQuiz}
-        className="mt-6 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+        className="mt-6 bg-gradient-to-r from-blue-500 to-purple-500 text-white p-3 rounded-md hover:bg-blue-700 transition duration-300"
       >
         Create Quiz
       </button>

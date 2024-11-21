@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Index = () => {
+const CreateQuizSection = () => {
   const navigate = useNavigate();
 
   const handleNavigation = () => {
@@ -9,19 +9,19 @@ const Index = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-16 p-8  rounded-lg  text-center">
-      <h2 className="text-3xl font-semibold text-white mb-4">Create a Quiz</h2>
-      <p className="text-lg text-gray-600 mb-6">
-        Start by creating your own quiz. Customize it with a title, questions, and answers to make it fun and engaging.
+    <div className="max-w-3xl mx-auto mt-16 p-8   text-center">
+      <h2 className="text-4xl font-bold text-gray-800 mb-6">Create Your Quiz</h2>
+      <p className="text-lg text-gray-600 mb-8">
+        Craft your own quizzes and challenge others! Personalize them with unique titles, engaging questions, and answers.
       </p>
       <button
         onClick={handleNavigation}
-        className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-green-600 transition duration-300"
+        className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold text-lg rounded-full hover:bg-blue-700 hover:shadow-xl transition duration-300"
       >
-        Create New Quiz
+        Start Creating
       </button>
     </div>
   );
 };
 
-export default Index;
+export default CreateQuizSection;
