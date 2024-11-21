@@ -31,10 +31,11 @@ const Login = () => {
 
   return (
     <div
-      className="flex justify-center items-center min-h-screen bg-cover bg-center"
-      style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${backgroundImage})` }}
+    className="flex justify-center items-center min-h-screen bg-cover bg-center bg-gradient-to-r from-purple-200 via-blue-200 to-purple-200 "
     >
-      <div className="max-w-md w-full px-8 py-6 bg-white bg-opacity-40 backdrop-blur-lg rounded-lg shadow-xl border border-gray-200">
+      <div 
+        className="max-w-md w-full px-8 py-6  bg-opacity-70 backdrop-blur-xl rounded-lg shadow-xl border  border-white/60 bg-white/30"
+>
         <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 text-center mb-6">
           MindVault
         </h1>
@@ -76,8 +77,8 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg shadow-md hover:from-purple-600 hover:to-blue-500 focus:outline-none focus:ring-4 focus:ring-purple-300"
-          >
+            className="w-full px-4 py-2 text-white bg-gradient-to-r from-blue-500 to-purple-500  rounded-md focus:outline-none focus:ring-4 focus:ring-purple-300"
+            >
             Login
           </button>
         </form>
