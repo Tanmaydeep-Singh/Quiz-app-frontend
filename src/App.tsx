@@ -26,7 +26,7 @@ const ProtectedRoute = ({ children } : ProtectedRouteProps) => {
 };
 const App = () => {
   return (
-    <div className="bg-gradient-to-r from-black via-gray-900 to-black shadow-md backdrop-blur-md bg-opacity-30">
+    <div className="bg-gradient-to-tr from-blue-50 via-blue-100 to-purple-50">
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
