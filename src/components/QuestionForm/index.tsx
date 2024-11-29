@@ -19,7 +19,7 @@ const QuestionForm = () => {
     };
 
     axios
-      .post('http://localhost:5000/api/question/create', payload, {
+      .post('https://quiz-app-frontend-beige.vercel.app/api/question/create', payload, {
         headers: { Authorization: token },
       })
       .then((res) => alert('Question Created Successfully'))

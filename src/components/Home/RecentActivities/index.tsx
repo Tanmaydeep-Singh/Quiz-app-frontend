@@ -15,7 +15,7 @@ const RecentActivitySection = () => {
   useEffect(() => {
     const fetchRecentActivities = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/users/recent-activities", {
+        const response = await fetch("https://quiz-app-frontend-beige.vercel.app/api/users/recent-activities", {
           headers: { Authorization: token },
         });
         if (!response.ok) {
