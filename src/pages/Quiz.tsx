@@ -33,7 +33,7 @@ const Quiz = () => {
       
       if (token) {
         axios
-          .post(`https://quiz-app-frontend-beige.vercel.app/api/quizzes/start`, {
+          .post(`https://quiz-app-backend-production-f3b5.up.railway.app/api/quizzes/start`, {
             "quizId": `${id}`,
           }, {
             headers: {

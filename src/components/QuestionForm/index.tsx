@@ -19,7 +19,7 @@ const QuestionForm = () => {
     };
 
     axios
-      .post('https://quiz-app-frontend-beige.vercel.app/api/question/create', payload, {
+      .post('https://quiz-app-backend-production-f3b5.up.railway.app/api/question/create', payload, {
         headers: { Authorization: token },
       })
       .then((res) => alert('Question Created Successfully'))

@@ -15,7 +15,7 @@ const Index = () => {
 
   useEffect(() => {
     axios
-      .get('https://quiz-app-frontend-beige.vercel.app/api/quizzes/')
+      .get('https://quiz-app-backend-production-f3b5.up.railway.app/api/quizzes/')
       .then((response) => {
         setQuizzes(response.data.quizzes.slice(0, 6)); // Limit to 6 quizzes
         setLoading(false);

@@ -76,7 +76,7 @@ const QuizStart = () => {
       answers,
     };
     axios
-      .post(`https://quiz-app-frontend-beige.vercel.app/api/quizzes/${id}/submit`, payload, {
+      .post(`https://quiz-app-backend-production-f3b5.up.railway.app/api/quizzes/${id}/submit`, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
