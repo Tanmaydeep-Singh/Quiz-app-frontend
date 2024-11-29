@@ -29,10 +29,10 @@ const Home = () => {
       <RecentActivities />
     </section>
   
-    <section className="mb-12">
+    {/* <section className="mb-12">
       <MyQuiz />
     </section>
-  
+   */}
     <section className="mb-12">
       <CreateQuiz />
     </section>

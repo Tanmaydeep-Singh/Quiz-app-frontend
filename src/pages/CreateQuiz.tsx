@@ -13,7 +13,7 @@ const CreateQuiz = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:5000/api/question/', {
+      .get('https://quiz-app-backend-production-f3b5.up.railway.app/api/question/', {
         headers: { Authorization: token },
       })
       .then((res) => setAvailableQuestions(res.data))
@@ -34,7 +34,7 @@ const CreateQuiz = () => {
     };
 
     axios
-      .post('http://localhost:5000/api/quizzes/create', payload, {
+      .post('https://quiz-app-backend-production-f3b5.up.railway.app/api/quizzes/create', payload, {
         headers: { Authorization: token },
       })
       .then(() => alert('Quiz Created Successfully'))
